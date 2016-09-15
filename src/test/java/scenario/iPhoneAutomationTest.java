@@ -30,7 +30,7 @@ public class iPhoneAutomationTest {
                         .usingDriverExecutable(new File("/usr/local/bin/node"))
                 .withAppiumJS(
                         new File(
-                                "/usr/local/lib/node_modules/appium/build/lib/appium.js"))
+                                "/usr/local/lib/node_modules/appium/build/lib/main.js"))
                 .withLogFile(new File("/Users/vitalii/Desktop/log.txt"))
                 .withIPAddress("127.0.0.1").usingPort(4723));
 
