@@ -35,7 +35,7 @@ public class AndroidAutomation {
 
         service.start();
 
-        DesiredCapabilities capabilities = DesiredCapabilities.iphone();
+        DesiredCapabilities capabilities = DesiredCapabilities.android();
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("deviceName", "LGD8025b18f838");
         capabilities.setCapability("platformVersion", "5.0");
