@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
  * Created by vitalii on 8/9/16.
  */
 public class LoginPage extends BasePage {
-    By userId = By.id(app_package_name + "email");
+    By userId = By.xpath(" //android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.view.View[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.FrameLayout[1]/android.widget.ScrollView[1]/android.widget.LinearLayout[1]/android.widget.EditText[1]");
     By password = By.id(app_package_name + "password");
     //    By showPassword = By.id(app_package_name + "show_password");
     By login_Button = By.id(app_package_name + "loginButton");
