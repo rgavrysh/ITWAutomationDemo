@@ -10,16 +10,10 @@ import pages.androidPages.LoginPage;
  */
 public class LoginTests extends BaseTest {
 
-    //todo: add dataprovider
-    @Test(groups = {"Android"})
-    public void emailLoginTest() {
+    @Test(groups = {"Android"}, dataProvider = "loginParameters", dataProviderClass = TestDataProvider.class)
+    public void emailLoginTest(String email, String password) {
         LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = loginPage.regularLogin("admin@admin.com", "!tweekend123");
+        HomePage homePage = loginPage.regularLogin(email, password);
         Assert.assertTrue(homePage.getHeaderTextView().toLowerCase().equals("all events"));
-    }
-
-    @Test(groups = {"Android", "IOS"})
-    public void crossPlatformTest() {
-        Assert.assertEquals(true, true);
     }
 }
