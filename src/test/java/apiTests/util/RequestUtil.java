@@ -17,22 +17,23 @@ public class RequestUtil {
     public static final Header CONTENT_TYPE_APPLICATION_JSON_HEADER = new Header("Content-type", "application/json");
     public static final Header MAGIC_PASSPHRASE_HEADER = new Header("Magic-passphrase", "2ak?9Mz%fBmv$9?E");
     public static final Header INVALID_MAGIC_PASSPHRASE_HEADER = new Header("Magic-passphrase", "2ak?9Mz%fBmv$9?e");
-    public static Header AuthorizationHeader;
+    private static Header AuthorizationHeader;
 
-    private final static String[][] inputDataParameters = {{"email", "admin@admin.com"}, {"password", "!tweekend123"}, {"login_type", "Regular"}};
+    private final static String[][] defaultUserDataParameters = {{"email", "admin@admin.com"}, {"password", "!tweekend123"}, {"login_type", "Regular"}};
 
     public static void authorize() {
         RestAssured.baseURI = "http://195.160.232.127";
         RestAssured.basePath = "/api";
-        Response response =
-                given().contentType("application/json").header(MAGIC_PASSPHRASE_HEADER)
-                        .body(JsonUtil.buildJson(inputDataParameters).toString())
-                        .when().post("/login/")
-                        .then()
-                        .statusCode(200)
-                        .extract().response();
+        Response response = requestWithBody(Method.POST, "/login/", JsonUtil.buildJson(defaultUserDataParameters).toString(),
+                CONTENT_TYPE_APPLICATION_JSON_HEADER, MAGIC_PASSPHRASE_HEADER);
+        response.then().statusCode(200);
         token = token + normalizeJSON(response).get("token");
-        AuthorizationHeader = new Header("Authorization", token);
+        setAuthorizationHeader(new Header("Authorization", token));
+        authorizedRequestWithoutBody(Method.POST, "/me/accept-tos/");
+    }
+
+    public static void setAuthorizationHeader(Header authorizationHeader) {
+        AuthorizationHeader = authorizationHeader;
     }
 
     public static boolean isAuthorized() {
@@ -55,7 +56,7 @@ public class RequestUtil {
                 .when().request(method, url);
     }
 
-    public static Response authorizedReqeustWithBody(Method method, String url, String data) {
+    public static Response authorizedRequestWithBody(Method method, String url, String data) {
         return requestWithBody(method, url, data, CONTENT_TYPE_APPLICATION_JSON_HEADER, AuthorizationHeader);
     }
 

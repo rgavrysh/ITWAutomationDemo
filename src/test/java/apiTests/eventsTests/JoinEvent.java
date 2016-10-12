@@ -38,7 +38,7 @@ public class JoinEvent extends BaseRestAssuredTest {
     @Test(dataProvider = "eventID", dataProviderClass = ApiDataProvider.class)
     public void joinEventTest(int eventID) {
         String[][] inputDataParameters = {{"event_id", String.valueOf(eventID)}, {"join_type", "User"}};
-        Response response = RequestUtil.authorizedReqeustWithBody(Method.POST, "/join-event/", JsonUtil.buildJson(inputDataParameters).toString());
+        Response response = RequestUtil.authorizedRequestWithBody(Method.POST, "/join-event/", JsonUtil.buildJson(inputDataParameters).toString());
         assertThat(response.statusCode(), equalTo(200));
         assertThat(normalizeJSON(response).get("status"), equalTo("User has joined the event"));
 
@@ -47,7 +47,7 @@ public class JoinEvent extends BaseRestAssuredTest {
     @Test(dependsOnMethods = "joinEventTest", dataProvider = "eventID", dataProviderClass = ApiDataProvider.class)
     public void joinToAlreadyJoinedEventTest(int eventID) {
         String[][] inputDataParameters = {{"event_id", String.valueOf(eventID)}, {"join_type", "User"}};
-        Response response = authorizedReqeustWithBody(Method.POST, "/join-event/", JsonUtil.buildJson(inputDataParameters).toString());
+        Response response = authorizedRequestWithBody(Method.POST, "/join-event/", JsonUtil.buildJson(inputDataParameters).toString());
         assertThat(response.statusCode(), equalTo(409));
         assertThat(normalizeJSON(response).get("status"), equalTo("Cannot join. User already joined the event"));
         assertThat(isUserJoinedEvent(eventID), is(true));
@@ -57,9 +57,9 @@ public class JoinEvent extends BaseRestAssuredTest {
     public void joinToNonExistedEventTest() {
         int eventID = 1;
         String[][] inputDataParameters = {{"event_id", String.valueOf(eventID)}, {"join_type", "User"}};
-        Response response = authorizedReqeustWithBody(Method.POST, "/join-event/", JsonUtil.buildJson(inputDataParameters).toString());
+        Response response = authorizedRequestWithBody(Method.POST, "/join-event/", JsonUtil.buildJson(inputDataParameters).toString());
         assertThat(response.statusCode(), equalTo(404));
-        assertThat(normalizeJSON(response).get("status"), equalTo("Event ID does not exist"));
+        assertThat(normalizeJSON(response).get("status"), equalTo("Event does not exist"));
         assertThat(isUserJoinedEvent(eventID), is(false));
     }
 
