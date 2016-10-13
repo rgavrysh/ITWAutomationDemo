@@ -1,15 +1,13 @@
 package pages.androidPages;
 
+
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pages.BasePage;
 
@@ -35,7 +33,6 @@ public class LoginPage extends BasePage {
         this.driver = (MobileDriver) driver;
     }
 
-
     public HomePage regularLogin(String email, String password) {
         emailInput.sendKeys(email);
         passwordInput.sendKeys(password);
@@ -43,35 +40,12 @@ public class LoginPage extends BasePage {
         signInButton.click();
         return new HomePage(driver);
     }
-}
-    @FindBy(id = "com.softserve.wroc.itweekend:id/email")
-    private WebElement emailInput;
-
-    @FindBy(id = "com.softserve.wroc.itweekend:id/password")
-    private WebElement passwordInput;
-
-    @FindBy(id = "com.softserve.wroc.itweekend:id/loginButton")
-    private WebElement signInButton;
 
     @FindBy(id = "com.softserve.wroc.itweekend:id/loginViaFacebook")
     private WebElement fbButton;
 
     @FindBy(id = "com.softserve.wroc.itweekend:id/loginViaLinkedIn")
     private WebElement inButton;
-
-    private WebDriver driver;
-
-    public LoginPage(WebDriver driver) {
-        super(driver);
-        this.driver = driver;
-    }
-
-    public HomePage regularLogin(String email, String password) {
-        emailInput.sendKeys(email);
-        passwordInput.sendKeys(password);
-        signInButton.click();
-        return new HomePage(driver);
-    }
 
     public HomePage fbLogin() {
         fbButton.click();

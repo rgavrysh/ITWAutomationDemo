@@ -8,6 +8,12 @@
     <artifactId>demo-maven</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <platform_name>Android</platform_name>
+        <ios_app_path>ios\app\path</ios_app_path>
+        <android_apk_path>/Users/vitalii/Downloads/itweekend_20161004.apk</android_apk_path>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>

@@ -17,13 +17,7 @@ public class LoginTests extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         HomePage homePage = loginPage.regularLogin(email, password);
         Assert.assertTrue(homePage.getHeaderTextView().toLowerCase().equals("all events"));
-    //todo: add dataprovider
-   /* @Test(groups = {"Android"})
-    public void emailLoginTest() {
-        LoginPage loginPage = new LoginPage(driver);
-        HomePage homePage = loginPage.regularLogin("admin@admin.com", "!tweekend123");
-        Assert.assertTrue(homePage.getHeaderTextView().toLowerCase().equals("all events"));
-    }*/
+    }
 
     @Test(groups = {"Android"})
     public void fbLoginTest() {
@@ -31,12 +25,6 @@ public class LoginTests extends BaseTest {
         HomePage homePage = loginPage.fbLogin();
         Assert.assertTrue(homePage.getHeaderTextView().toLowerCase().equals("all events"));
     }
-
-
- /*   @Test(groups = {"Android", "IOS"})
-    public void crossPlatformTest() {
-        Assert.assertEquals(true, true);
-    }*/
 
     @AfterMethod(groups = {"Android", "IOS"})
     public void logoutTest() {
