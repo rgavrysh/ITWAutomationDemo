@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="RESTTests">
+    <test name="RESTAPISmokeTest">
+        <classes>
+            <class name="apiTests.userAuthorizationTests.Login"/>
+            <!--<class name="apiTests.userAuthorizationTests.RegisterTest"/>-->
+            <class name="apiTests.eventsTests.JoinEvent"/>
+            <class name="apiTests.eventsTests.LeaveEvent"/>
+        </classes>
+    </test>
+</suite>
