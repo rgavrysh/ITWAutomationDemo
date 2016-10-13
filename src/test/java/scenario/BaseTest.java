@@ -20,7 +20,11 @@ public abstract class BaseTest {
     public void setUp() throws IOException, InterruptedException {
         AppiumController.startAppiumServer();
         driver = DriverFactory.getFactoryInstance().getDriver();
+<<<<<<< Updated upstream
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+=======
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+>>>>>>> Stashed changes
     }
 
     @AfterSuite(alwaysRun = true)

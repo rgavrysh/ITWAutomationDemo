@@ -29,7 +29,7 @@ public class iPhoneAutomationTest {
     @BeforeClass
     public void setUp() throws Exception {
 
-        service = AppiumDriverLocalService
+       /* service = AppiumDriverLocalService
                 .buildService(new AppiumServiceBuilder()
                         .usingDriverExecutable(new File("/usr/local/bin/node"))
                 .withAppiumJS(
@@ -38,7 +38,7 @@ public class iPhoneAutomationTest {
                 .withLogFile(new File("/Users/vitalii/Desktop/log.txt"))
                 .withIPAddress("127.0.0.1").usingPort(4723));
 
-        service.start();
+        service.start();*/
 
         DesiredCapabilities capabilities = DesiredCapabilities.iphone();
         capabilities.setCapability("platformName", "IOS");
@@ -46,8 +46,8 @@ public class iPhoneAutomationTest {
         capabilities.setCapability("platformVersion", "9.3");
         capabilities.setCapability("app", "/Users/vitalii/Desktop/IT Weekend.app");
 
-        iosDriver = new IOSDriver<MobileElement>(service.getUrl(), capabilities);
-        iosDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        iosDriver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub/"), capabilities);
+   //     iosDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @Test
@@ -64,6 +64,6 @@ public class iPhoneAutomationTest {
     @AfterClass
     public void tearDown() {
         iosDriver.quit();
-        service.stop();
+     //   service.stop();
     }
 }
