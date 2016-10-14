@@ -23,9 +23,9 @@ public abstract class BaseTest {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterSuite(alwaysRun = true)
-    public void tearDown() throws IOException {
-        DriverFactory.getFactoryInstance().closeDriver();
-        AppiumController.stopAppiumServer();
-    }
+        @AfterSuite(alwaysRun = true)
+        public void tearDown ()throws IOException {
+            DriverFactory.getFactoryInstance().closeDriver();
+            AppiumController.stopAppiumServer();
+        }
 }

@@ -1,6 +1,8 @@
 package scenario;
 
 import junit.framework.Assert;
+import org.aspectj.lang.annotation.After;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import pages.androidPages.HomePage;
 import pages.androidPages.LoginPage;
@@ -15,5 +17,18 @@ public class LoginTests extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         HomePage homePage = loginPage.regularLogin(email, password);
         Assert.assertTrue(homePage.getHeaderTextView().toLowerCase().equals("all events"));
+    }
+
+    @Test(groups = {"Android"})
+    public void fbLoginTest() {
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = loginPage.fbLogin();
+        Assert.assertTrue(homePage.getHeaderTextView().toLowerCase().equals("all events"));
+    }
+
+    @AfterMethod(groups = {"Android", "IOS"})
+    public void logoutTest() {
+        HomePage homepage = new HomePage(driver);
+        homepage.userLogout();
     }
 }
