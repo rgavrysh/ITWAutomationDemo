@@ -20,11 +20,17 @@ import java.util.stream.Collectors;
  * Created by rgavrysh on 10/6/2016.
  */
 public class HomePage extends BasePage {
-    @FindBy(className = "android.widget.TextView")
+    @AndroidFindBy(className = "android.widget.TextView")
     private WebElement headerTextView;
 
     @AndroidFindBy(id = "com.softserve.wroc.itweekend:id/textViewEventTitle")
     private List<MobileElement> eventList;
+
+    @AndroidFindBy(xpath = "//android.widget.ImageButton[1]")
+    private WebElement mainMenuIcon;
+
+    @AndroidFindBy(id = "com.softserve.wroc.itweekend:id/imageViewDP")
+    private WebElement userMenuImage;
 
     private MobileDriver driver;
     private Dimension winSize;
@@ -72,5 +78,15 @@ public class HomePage extends BasePage {
             }
         }
         throw new NoSuchElementException("Even: " + eventName + " could't be found.");
+    }
+    public UserProfilePage getUserProfile() {
+        mainMenuIcon.click();
+        userMenuImage.click();
+        return new UserProfilePage(driver);
+    }
+
+    public LoginPage userLogout() {
+        getUserProfile().getUserSettings().userLogOut();
+        return new LoginPage(driver);
     }
 }
