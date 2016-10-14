@@ -5,9 +5,8 @@ import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSFindBy;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import pages.BasePage;
 
@@ -26,6 +25,9 @@ public class LoginPage extends BasePage {
     @AndroidFindBy(id = "com.softserve.wroc.itweekend:id/loginButton")
     private MobileElement signInButton;
 
+    @FindBy(id = "com.softserve.wroc.itweekend:id/loginViaFacebook")
+    private MobileElement fbButton;
+
     private MobileDriver driver;
 
     public LoginPage(WebDriver driver) {
@@ -41,22 +43,12 @@ public class LoginPage extends BasePage {
         return new HomePage(driver);
     }
 
-    @FindBy(id = "com.softserve.wroc.itweekend:id/loginViaFacebook")
-    private WebElement fbButton;
-
-    @FindBy(id = "com.softserve.wroc.itweekend:id/loginViaLinkedIn")
-    private WebElement inButton;
-
     public HomePage fbLogin() {
         fbButton.click();
-        if (driver.findElements(By.id("com.facebook.katana:id/login_bottom_first_link")).size()==0 &&
-                driver.findElements(By.id("com.facebook.katana:id/login_username")).size()==0)
-
-        {
-        return new HomePage(driver);
-        }
-        else{
-            return new FBLoginPage(driver).loginViaFB("buz59application@gmail.com", "bus1n%ss497");
+        if (isElementExist(By.xpath("//android.webkit.WebView[@content-desc='Welcome to Facebook']"))) {
+            return new FBLoginPage(driver).loginViaFB("wrdrbtestest@gmail.com", "Fit%test.31");
+        } else {
+            return new HomePage(driver);
         }
     }
 }
