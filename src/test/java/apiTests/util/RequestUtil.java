@@ -13,7 +13,7 @@ import static io.restassured.RestAssured.given;
  * Created by rgavrysh on 10/12/2016.
  */
 public class RequestUtil {
-    public static String token = "Token ";
+//    public static String token = "Token ";
     public static final Header CONTENT_TYPE_APPLICATION_JSON_HEADER = new Header("Content-type", "application/json");
     public static final Header MAGIC_PASSPHRASE_HEADER = new Header("Magic-passphrase", "2ak?9Mz%fBmv$9?E");
     public static final Header INVALID_MAGIC_PASSPHRASE_HEADER = new Header("Magic-passphrase", "2ak?9Mz%fBmv$9?e");
@@ -27,7 +27,7 @@ public class RequestUtil {
         Response response = requestWithBody(Method.POST, "/login/", JsonUtil.buildJson(defaultUserDataParameters).toString(),
                 CONTENT_TYPE_APPLICATION_JSON_HEADER, MAGIC_PASSPHRASE_HEADER);
         response.then().statusCode(200);
-        token = token + normalizeJSON(response).get("token");
+        String token = "Token " + normalizeJSON(response).get("token");
         setAuthorizationHeader(new Header("Authorization", token));
         authorizedRequestWithoutBody(Method.POST, "/me/accept-tos/");
     }

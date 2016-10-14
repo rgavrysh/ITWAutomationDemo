@@ -3,9 +3,10 @@
     <test name="RESTAPISmokeTest">
         <classes>
             <class name="apiTests.userAuthorizationTests.Login"/>
-            <!--<class name="apiTests.userAuthorizationTests.RegisterTest"/>-->
+            <class name="apiTests.userAuthorizationTests.RegisterTest"/>
             <class name="apiTests.eventsTests.JoinEvent"/>
             <class name="apiTests.eventsTests.LeaveEvent"/>
+            <class name="apiTests.userAuthorizationTests.MultiThreadRegistration"/>
         </classes>
     </test>
 </suite>

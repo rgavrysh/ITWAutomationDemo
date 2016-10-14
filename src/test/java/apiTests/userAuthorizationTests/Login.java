@@ -33,4 +33,14 @@ public class Login extends BaseRestAssuredTest {
         assertThat(response.statusCode(), equalTo(401));
         assertThat(normalizeJSON(response).get("status"), equalTo("Email or password are incorrect."));
     }
+
+    @Test
+    public void loginViaFacebook() {
+        // loginFacebook token = "Token 4969b3132922923ff1610a4239bdb9e488e0d6da"
+        String[][] inputDataParameters = {{"email", "FacebookLogin@admin.com"}, {"login_type", "Facebook"}};
+        Response response = RequestUtil.requestWithBody(Method.POST, "/login/", JsonUtil.buildJson(inputDataParameters).toString(),
+                CONTENT_TYPE_APPLICATION_JSON_HEADER, MAGIC_PASSPHRASE_HEADER);
+        assertThat(response.statusCode(), equalTo(200));
+        assertThat(normalizeJSON(response).get("token"), equalTo("4969b3132922923ff1610a4239bdb9e488e0d6da"));
+    }
 }
