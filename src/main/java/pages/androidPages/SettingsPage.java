@@ -21,6 +21,8 @@ public class SettingsPage extends BasePage {
     }
 
     public LoginPage userLogOut() {
+        //// TODO: 10/18/2016 scroll down to Log Out button
+        verticalSwipe();
         logOutButton.click();
         return new LoginPage(driver);
     }

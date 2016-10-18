@@ -11,4 +11,7 @@ public class ApiDataProvider {
     public static Object[][] getEventID() {
         return new Object[][]{{24}};
     }
+
+    @DataProvider(name = "eventWithLimitation")
+    public static Object[][] getEventIDWithLimitation() {return new Object[][]{{"26"}};}
 }

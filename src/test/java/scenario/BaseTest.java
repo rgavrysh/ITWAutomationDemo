@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class BaseTest {
 
-    protected AppiumDriver driver;
+    protected static AppiumDriver driver;
 
     @BeforeSuite(alwaysRun = true)
     public void setUp() throws IOException, InterruptedException {

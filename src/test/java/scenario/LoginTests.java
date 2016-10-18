@@ -1,7 +1,6 @@
 package scenario;
 
 import junit.framework.Assert;
-import org.aspectj.lang.annotation.After;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import pages.androidPages.HomePage;
@@ -19,7 +18,7 @@ public class LoginTests extends BaseTest {
         Assert.assertTrue(homePage.getHeaderTextView().toLowerCase().equals("all events"));
     }
 
-    @Test(groups = {"Android"})
+//    @Test(groups = {"Android"})
     public void fbLoginTest() {
         LoginPage loginPage = new LoginPage(driver);
         HomePage homePage = loginPage.fbLogin();

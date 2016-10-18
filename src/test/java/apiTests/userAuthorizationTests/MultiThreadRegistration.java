@@ -1,5 +1,6 @@
 package apiTests.userAuthorizationTests;
 
+import apiTests.ApiDataProvider;
 import apiTests.BaseRestAssuredTest;
 import apiTests.util.JsonUtil;
 import io.restassured.RestAssured;
@@ -52,6 +53,7 @@ public class MultiThreadRegistration extends BaseRestAssuredTest {
         }
     }
 
+    //todo: for performance purpose usage
     @Test
     public void multipleRegistration() throws InterruptedException {
         CreateUserThread u1 = new CreateUserThread();
@@ -68,9 +70,9 @@ public class MultiThreadRegistration extends BaseRestAssuredTest {
         u3.join(3000);
     }
 
-    @Test(dependsOnMethods = "multipleRegistration")
-    public void joinNewlyCreatedUsersToEvent() {
-        String[][] inputDataParameters = {{"event_id", "26"}, {"join_type", "User"}};
+    @Test(dependsOnMethods = "multipleRegistration", dataProvider = "eventWithLimitation", dataProviderClass = ApiDataProvider.class)
+    public void joinNewlyCreatedUsersToEvent(String eventID) {
+        String[][] inputDataParameters = {{"event_id", eventID}, {"join_type", "User"}};
         for (String userToken : registeredUserTokens) {
             requestWithoutBody(Method.POST, "/me/accept-tos/", CONTENT_TYPE_APPLICATION_JSON_HEADER, new Header("Authorization", userToken));
             Response response = requestWithBody(Method.POST, "/join-event/", JsonUtil.buildJson(inputDataParameters).toString(),
@@ -80,9 +82,9 @@ public class MultiThreadRegistration extends BaseRestAssuredTest {
         }
     }
 
-    @Test(dependsOnMethods = "joinNewlyCreatedUsersToEvent")
-    public void joinToFullEvent() {
-        String[][] inputDataParameters = {{"event_id", "26"}, {"join_type", "User"}};
+    @Test(dependsOnMethods = "joinNewlyCreatedUsersToEvent", dataProvider = "eventWithLimitation", dataProviderClass = ApiDataProvider.class)
+    public void joinToFullEvent(String eventID) {
+        String[][] inputDataParameters = {{"event_id", eventID}, {"join_type", "User"}};
         Response response = authorizedRequestWithBody(Method.POST, "/join-event/", JsonUtil.buildJson(inputDataParameters).toString());
         assertThat(response.statusCode(), equalTo(409));
         assertThat(normalizeJSON(response).get("status"), equalTo("Event has reached participants limit"));
@@ -90,7 +92,7 @@ public class MultiThreadRegistration extends BaseRestAssuredTest {
 
     @AfterClass
     public void multipleUnJoin() {
-        String[][] inputDataParameters = {{"event_id", "26"}};
+        String[][] inputDataParameters = {{"event_id", (String) ApiDataProvider.getEventIDWithLimitation()[0][0]}};
         for (String userToken : registeredUserTokens) {
             Response response = requestWithBody(Method.POST, "/leave-event/", JsonUtil.buildJson(inputDataParameters).toString(),
                     CONTENT_TYPE_APPLICATION_JSON_HEADER, new Header("Authorization", userToken));

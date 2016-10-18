@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 /**
  * Created by rgavrysh on 10/6/2016.
  */
+//todo: decouple to AllEvents/MyEvents
 public class HomePage extends BasePage {
     @AndroidFindBy(className = "android.widget.TextView")
     private WebElement headerTextView;
@@ -32,8 +33,10 @@ public class HomePage extends BasePage {
     @AndroidFindBy(id = "com.softserve.wroc.itweekend:id/imageViewDP")
     private WebElement userMenuImage;
 
+    @AndroidFindBy(xpath = "//android.widget.CheckedTextView[@text='My Events']")
+    protected MobileElement myEventsButton;
+
     private MobileDriver driver;
-    private Dimension winSize;
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -45,11 +48,6 @@ public class HomePage extends BasePage {
     }
 
     public HomePage scrollToEvent(String eventName) {
-        winSize = driver.manage().window().getSize();
-        int startX = getX(20);
-        int endX = getX(20);
-        int startY = getY(80);
-        int endY = getY(10);
         HashSet<String> events = new HashSet<>();
         while (events.addAll(eventList.stream().map(RemoteWebElement::getText).collect(Collectors.toCollection(ArrayList::new)))) {
             for (MobileElement event : eventList) {
@@ -57,17 +55,9 @@ public class HomePage extends BasePage {
                     return this;
                 }
             }
-            driver.swipe(startX, startY, endX, endY, 1000);
+            verticalSwipe();
         }
         throw new NoSuchElementException("Event: " + eventName + " couldn't be found.");
-    }
-
-    private int getX(int x) {
-        return (int) (winSize.width * x) / 100;
-    }
-
-    private int getY(int y) {
-        return (int) (winSize.width * y) / 100;
     }
 
     public ItEvent openEvent(String eventName) {
@@ -88,5 +78,11 @@ public class HomePage extends BasePage {
     public LoginPage userLogout() {
         getUserProfile().getUserSettings().userLogOut();
         return new LoginPage(driver);
+    }
+
+    public MyEvents navigateToMyEvents() {
+        mainMenuIcon.click();
+        myEventsButton.click();
+        return new MyEvents(driver);
     }
 }
